@@ -1,0 +1,4 @@
+--- # Give Temperature
+message_type: chat
+payload:
+  text: Temperature is {{ context }}

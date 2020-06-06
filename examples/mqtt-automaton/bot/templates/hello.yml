@@ -1,0 +1,4 @@
+--- # hello
+message_type: chat
+payload:
+  text: "Hello{% if context.get('name', False) %} {{ context['name'] }} {% endif %}"

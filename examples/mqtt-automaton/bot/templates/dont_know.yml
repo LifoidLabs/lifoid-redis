@@ -1,0 +1,4 @@
+--- # Bot does not understand
+message_type: chat
+payload:
+  text: I don't know yet.

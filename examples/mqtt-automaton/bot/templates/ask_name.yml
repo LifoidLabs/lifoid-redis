@@ -1,0 +1,4 @@
+--- # Ask for user's name
+message_type: chat
+payload:
+  text: "{% if context['ask_name_counter'] > 1 %}I was expecting something like: My mame is ... So {% endif %}What's your name?"
