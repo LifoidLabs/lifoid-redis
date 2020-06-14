@@ -40,7 +40,7 @@ URL = 'https://github.com/romaryd/lifoid-redis'
 LICENSE = text_of('LICENSE')
 PACKAGES = find_packages(exclude=['tests', 'tests.*'])
 
-INSTALL_REQUIRES = ['redis']
+INSTALL_REQUIRES = ['redis', 'python-awesome-decorators', 'lifoid']
 TEST_SUITE = 'tests'
 TESTS_REQUIRE = ['pytest']
 
