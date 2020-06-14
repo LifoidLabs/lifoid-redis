@@ -8,12 +8,11 @@ import os
 import json
 import redis
 from awesomedecorators import memoized
-from lifoid.logging.mixin import LoggingMixin
 from lifoid.data.backend import Backend
 from lifoid.config import settings
 
 
-class RedisBackend(Backend, LoggingMixin):
+class RedisBackend(Backend):
     """
     Backend based on Redis
     """
@@ -30,9 +29,6 @@ class RedisBackend(Backend, LoggingMixin):
         return self.redis_server.keys(pattern)
 
     def get(self, key, sort_key):
-        self.logger.debug('Storage - get {}'.format(
-            self.prefixed('{}:{}'.format(key, sort_key))
-        ))
         value = self.redis_server.get(
             self.prefixed('{}:{}'.format(key, sort_key))
         )
@@ -41,11 +37,6 @@ class RedisBackend(Backend, LoggingMixin):
         return value
 
     def set(self, key, sort_key, value):
-        self.logger.debug('Storage - set value {} for {}'
-                          .format(value,
-                                  self.prefixed(
-                                      '{}:{}'.format(key, sort_key)
-                                  )))
         if sort_key is not None:
             self.redis_server.zadd(self.prefixed(key), { sort_key: 0.0 })
         prev_value = self.get(key, sort_key)
@@ -73,8 +64,6 @@ class RedisBackend(Backend, LoggingMixin):
             '{}:{}'.format(key, sort_key)), value)
 
     def delete(self, key, sort_key):
-        self.logger.debug('Storage - delete {}'.format(self.prefixed(
-            '{}:{}'.format(key, sort_key))))
         if sort_key is not None:
             self.redis_server.zrem(self.prefixed(key), sort_key)
         prev_value = self.get(key, sort_key)
@@ -108,9 +97,6 @@ class RedisBackend(Backend, LoggingMixin):
         return res
 
     def latest(self, key):
-        self.logger.debug('Storage - get latest for {}'.format(
-            self.prefixed(key)
-        ))
         res = self.redis_server.zrevrangebylex(
             self.prefixed(key),
             '+', '-',
