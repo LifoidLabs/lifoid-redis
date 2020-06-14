@@ -9,7 +9,7 @@ import datetime
 import time
 from lifoid_redis.repository import Repository
 from lifoid_redis.record import NamedtupleRecord
-from lifoid_redis.backent import RedisBackend
+from lifoid_redis.backend import RedisBackend
 
 
 try:
