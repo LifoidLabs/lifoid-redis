@@ -41,4 +41,3 @@ from simple-bot --> Hello Bob
 What's the temperature today?
 from simple-bot --> Temperature is 27.3
 ```
-

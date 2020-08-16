@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  redis:
+    image: redis:alpine
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - "8001:8001"
+  mosquitto:
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+  lifoid:
+    image: lifoid_redis
+    command: lifoid mqtt_bot
+    depends_on:
+      - mosquitto
+    volumes:
+      - ./bot:/app/bot
+    environment:
+      LOGGING_CONSOLE_LEVEL: DEBUG
+      LIFOID_SETTINGS_MODULE: bot.settings
+      LOGGING_SERVICE: lifoid
+      LOGGING_DEBUG: "no"
+      LOGGING_HANDLERS: console,logfile,rotatedlogfile,debug
+      LOGGING_FILE: lifoid.log
+      LOGGING_ROTATED_FILE_INTERVAL: H
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      MQTT_HOST: mosquitto
+      MQTT_PORT: 1883
